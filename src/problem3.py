@@ -115,6 +115,8 @@ def run_test_problem3a():
     print('Test 5 expected:', expected)
     print('       actual:  ', answer)
 
+    window4.close_on_mouse_click()
+
 
 def problem3a(window, point, n):
     """
@@ -157,6 +159,32 @@ def problem3a(window, point, n):
     #    DIFFICULTY:      7 or 8
     #    TIME ESTIMATE:   20 to 35 minutes.
     # ------------------------------------------------------------------
+    total = 0
+
+    x = point.x
+    y = point.y
+    p1 = rg.Point(x, y)
+    p2 = rg.Point(x, y + 50)
+
+    for k in range(n):
+        line = rg.Line(p1, p2)
+
+        if (k * 2) + 1 <= 13:
+            line.thickness = (k * 2) + 1
+        else:
+            line.thickness = 13
+
+        line.attach_to(window)
+        window.render(0.05)
+
+        x = x + 20
+        y = y + 10
+        p1 = rg.Point(x, y)
+        p2 = rg.Point(x, y + 50)
+
+        total = total + line.thickness
+
+    return total
 
 
 def run_test_problem3b():
@@ -226,6 +254,23 @@ def problem3b(m, point1):
     #    DIFFICULTY:      8 or 9
     #    TIME ESTIMATE:   20 to 30 minutes.
     # ------------------------------------------------------------------
+    total = 0
+
+    window = rg.RoseWindow(650, 400)
+
+    for k in range(m):
+        sum_thickness = problem3a(window, point1, (2 * k) + 3)
+
+        point1.y = point1.y + 60
+
+        total = total + sum_thickness
+
+    print('Click graphics window to close it')
+
+    window.close_on_mouse_click()
+
+    return total
+
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
